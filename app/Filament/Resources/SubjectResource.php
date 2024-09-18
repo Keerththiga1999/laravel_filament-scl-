@@ -12,7 +12,8 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
-
+use Filament\Forms\Components\ColorPicker;
+use Filament\Tables\Columns\ColorColumn;
 class SubjectResource extends Resource
 {
     protected static ?string $model = Subject::class;
@@ -29,9 +30,10 @@ class SubjectResource extends Resource
                 Forms\Components\TextInput::make('subject_order')
                     ->required()
                     ->numeric(),
-                Forms\Components\TextInput::make('color')
-                    ->required()
-                    ->maxLength(20),
+                    ColorPicker::make('color')
+                    ->required(),
+                    
+                    
             ]);
     }
 
@@ -39,13 +41,12 @@ class SubjectResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('subject_name')
+                Tables\Columns\TextColumn::make('subject_name')->label('Subject Name')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('subject_order')
+                Tables\Columns\TextColumn::make('subject_order')->label('Subject Order')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('color')
-                    ->searchable(),
+               
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
@@ -54,6 +55,7 @@ class SubjectResource extends Resource
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
+                ColorColumn::make('color')
             ])
             ->filters([
                 Tables\Filters\TrashedFilter::make(),

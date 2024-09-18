@@ -4,6 +4,7 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\StudentResource\Pages;
 use App\Filament\Resources\StudentResource\RelationManagers;
+use App\Models\Grade;
 use App\Models\Student;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -12,6 +13,7 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Filament\Forms\Components\Select;
 
 class StudentResource extends Resource
 {
@@ -23,15 +25,16 @@ class StudentResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('first_name')
+                Forms\Components\TextInput::make('first_name')->label('First Name')
                     ->required()
                     ->maxLength(50),
-                Forms\Components\TextInput::make('last_name')
+                Forms\Components\TextInput::make('last_name')->label('Last Name')
                     ->required()
                     ->maxLength(50),
-                Forms\Components\TextInput::make('grade_id')
+                Forms\Components\Select::make('grade_id')->label('Grade Name')
                     ->required()
-                    ->numeric(),
+                    ->options(Grade::all()->pluck('grade_name', 'id')),
+                    
             ]);
     }
 
@@ -39,12 +42,13 @@ class StudentResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('first_name')
+                Tables\Columns\TextColumn::make('first_name')->label('First Name')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('last_name')
+                Tables\Columns\TextColumn::make('last_name')->label('Last Name')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('grade_id')
-                    ->numeric()
+                Tables\Columns\TextColumn::make('grade.grade_name')->label('Grade Name')
+                    
+                    
                     ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
@@ -74,7 +78,7 @@ class StudentResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            RelationManagers\SubjectsRelationManager::class,
         ];
     }
 

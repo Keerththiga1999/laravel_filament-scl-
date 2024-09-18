@@ -17,6 +17,7 @@ return new class extends Migration
             $table->decimal('grade_order');
             $table->string('grade_color',length:50);
             $table->integer('grade_group');
+            $table->integer('user_id')->nullable();
             $table->timestamps();
         });
     }
