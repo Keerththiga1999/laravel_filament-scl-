@@ -79,6 +79,7 @@ class StudentResource extends Resource
     {
         return [
             RelationManagers\SubjectsRelationManager::class,
+            RelationManagers\GradeRelationManager::class,
         ];
     }
 
