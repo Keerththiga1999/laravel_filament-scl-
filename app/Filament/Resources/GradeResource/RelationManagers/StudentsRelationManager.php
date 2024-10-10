@@ -3,12 +3,13 @@
 namespace App\Filament\Resources\GradeResource\RelationManagers;
 
 use Filament\Forms;
-use Filament\Forms\Form;
-use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
+use Filament\Forms\Form;
 use Filament\Tables\Table;
+use Tables\Actions\AttachAction;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Filament\Resources\RelationManagers\RelationManager;
 
 class StudentsRelationManager extends RelationManager
 {
@@ -21,6 +22,10 @@ class StudentsRelationManager extends RelationManager
                 Forms\Components\TextInput::make('first_name')
                     ->required()
                     ->maxLength(255),
+
+                    Forms\Components\TextInput::make('last_name')->label('Last Name')
+                    ->required()
+                    ->maxLength(50),
             ]);
     }
 
@@ -36,10 +41,11 @@ class StudentsRelationManager extends RelationManager
                 //
             ])
             ->headerActions([
-                Tables\Actions\CreateAction::make(),
+                Tables\Actions\AttachAction::make(),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\DetachAction::make(),
                 Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([

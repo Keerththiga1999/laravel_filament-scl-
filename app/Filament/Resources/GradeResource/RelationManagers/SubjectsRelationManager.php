@@ -3,12 +3,13 @@
 namespace App\Filament\Resources\GradeResource\RelationManagers;
 
 use Filament\Forms;
-use Filament\Forms\Form;
-use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
+use Filament\Forms\Form;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use Filament\Forms\Components\ColorPicker;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Filament\Resources\RelationManagers\RelationManager;
 
 class SubjectsRelationManager extends RelationManager
 {
@@ -21,6 +22,11 @@ class SubjectsRelationManager extends RelationManager
                 Forms\Components\TextInput::make('subject_name')
                     ->required()
                     ->maxLength(255),
+                    Forms\Components\TextInput::make('subject_order')
+                    ->required()
+                    ->numeric(),
+                    ColorPicker::make('color')
+                    ->required(),
             ]);
     }
 
@@ -37,10 +43,11 @@ class SubjectsRelationManager extends RelationManager
                 //
             ])
             ->headerActions([
-                Tables\Actions\CreateAction::make(),
+                Tables\Actions\AttachAction::make(),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\DetachAction::make(),
                 Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([

@@ -18,7 +18,7 @@ class GradeRelationManager extends RelationManager
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('grade_name')
+                Forms\Components\TextInput::make('grade_name--attach')
                     ->required()
                     ->maxLength(255),
             ]);
@@ -29,11 +29,7 @@ class GradeRelationManager extends RelationManager
         return $table
             ->recordTitleAttribute('grade_name')
             ->columns([
-                Tables\Columns\TextColumn::make('grade_name')->label('Grade Name'),
-                Tables\Columns\TextColumn::make('grade_group')->label('Grade Group'),
-                Tables\Columns\TextColumn::make('grade_order')->label('Grade Order'),
-                Tables\Columns\TextColumn::make('grade_color')->label('Grade Color'),
-
+                Tables\Columns\TextColumn::make('grade_name'),
             ])
             ->filters([
                 //
@@ -43,6 +39,7 @@ class GradeRelationManager extends RelationManager
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+               
                 Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([

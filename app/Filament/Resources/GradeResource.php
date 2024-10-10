@@ -25,14 +25,18 @@ class GradeResource extends Resource
             ->schema([
                 Forms\Components\TextInput::make('grade_name')
                     ->required()
-                    ->maxLength(50),
+                    ->maxLength(50)
+                    ->label('Grade Name'),
                 Forms\Components\TextInput::make('grade_group')
+                ->label('Grade Group')
                     ->required()
                     ->numeric(),
                 Forms\Components\TextInput::make('grade_order')
+                ->label('Grade Order')
                     ->required()
                     ->numeric(),
                 Forms\Components\TextInput::make('grade_color')
+                ->label('Grade Color')
                     ->required()
                     ->maxLength(50),
             ]);
@@ -43,14 +47,18 @@ class GradeResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('grade_name')
+                ->label('Grade Name')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('grade_group')
+                ->label('Grade Group')
                     ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('grade_order')
+                ->label('Grade Order')
                     ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('grade_color')
+                ->label('Grade Color')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
